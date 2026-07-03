@@ -9,7 +9,17 @@ st.set_page_config(page_title="Training Availability Submission", layout="wide")
 
 # Configuration
 DATA_FILE = "availability_responses.csv"
-AVAILABILITY_OPTIONS = ["Available", "Tentative", "Prefer not", "Unavailable"]
+
+# Choose your availability options (uncomment the one you want to use):
+
+# Option 1: Simple Yes/No
+AVAILABILITY_OPTIONS = ["Yes", "No"]
+
+# Option 2: Yes/No/Tentative (uncomment to use this instead)
+# AVAILABILITY_OPTIONS = ["Yes", "Tentative", "No"]
+
+# Option 3: Detailed (uncomment to use this instead)
+# AVAILABILITY_OPTIONS = ["Available", "Tentative", "Prefer not", "Unavailable"]
 
 # Password configuration - use secrets in production
 try:
@@ -17,17 +27,26 @@ try:
 except:
     ACCESS_PASSWORD = "training2026"  # Fallback for local testing
 
-# Define your training sessions here - Next 3 weeks: Wed/Thu/Fri
+# Define your training sessions here - Next 3 weeks: Wed/Thu/Fri with AM/PM
 TRAINING_SESSIONS = [
-    "Wed 8 Jul",
-    "Thu 9 Jul",
-    "Fri 10 Jul",
-    "Wed 15 Jul",
-    "Thu 16 Jul",
-    "Fri 17 Jul",
-    "Wed 22 Jul",
-    "Thu 23 Jul",
-    "Fri 24 Jul",
+    "Wed 8 Jul AM",
+    "Wed 8 Jul PM",
+    "Thu 9 Jul AM",
+    "Thu 9 Jul PM",
+    "Fri 10 Jul AM",
+    "Fri 10 Jul PM",
+    "Wed 15 Jul AM",
+    "Wed 15 Jul PM",
+    "Thu 16 Jul AM",
+    "Thu 16 Jul PM",
+    "Fri 17 Jul AM",
+    "Fri 17 Jul PM",
+    "Wed 22 Jul AM",
+    "Wed 22 Jul PM",
+    "Thu 23 Jul AM",
+    "Thu 23 Jul PM",
+    "Fri 24 Jul AM",
+    "Fri 24 Jul PM",
 ]
 
 # Password protection
@@ -158,10 +177,20 @@ else:
 with st.sidebar:
     st.header("ℹ️ Information")
     st.write("**Availability Options:**")
-    st.write("- **Available**: You can definitely attend")
-    st.write("- **Tentative**: You might be able to attend")
-    st.write("- **Prefer not**: You prefer not to attend this session")
-    st.write("- **Unavailable**: You cannot attend")
+    
+    # Show current options being used
+    if AVAILABILITY_OPTIONS == ["Yes", "No"]:
+        st.write("- **Yes**: You can attend")
+        st.write("- **No**: You cannot attend")
+    elif len(AVAILABILITY_OPTIONS) == 3 and "Tentative" in AVAILABILITY_OPTIONS:
+        st.write("- **Yes**: You can attend")
+        st.write("- **Tentative**: You might be able to attend")
+        st.write("- **No**: You cannot attend")
+    else:
+        st.write("- **Available**: You can definitely attend")
+        st.write("- **Tentative**: You might be able to attend")
+        st.write("- **Prefer not**: You prefer not to attend this session")
+        st.write("- **Unavailable**: You cannot attend")
     
     st.divider()
     
